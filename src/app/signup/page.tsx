@@ -9,7 +9,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { toast } from "react-toastify";
 
 export default function SignupPage() {
-   const router = useRouter()
+  const router = useRouter();
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -35,10 +35,9 @@ export default function SignupPage() {
     try {
       setLoading(true);
       const response = await axios.post("/api/users/signup", user);
-      console.log("Signup success", response.data);
       router.push("/login");
       toast.success("Signup success");
-    } catch (error:any) {
+    } catch (error: any) {
       toast.error(error.message);
       console.log("Signup failed", error.message);
     } finally {
@@ -107,7 +106,7 @@ export default function SignupPage() {
 
       {buttonDisabled ? (
         <button
-          className="w-full bg-blue-500 text-white font-semibold py-2 rounded-md cursor-not-allowed"
+          className="w-full bg-blue-500 text-white font-semibold py-2 rounded-md cursor-not-allowed "
           type="submit"
           disabled
         >
@@ -116,7 +115,7 @@ export default function SignupPage() {
       ) : (
         <button
           onClick={onSignup}
-          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md cursor-pointer"
+          className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md cursor-pointer ${loading && "animate-pulse cursor-not-allowed"}`}
           type="submit"
         >
           {loading ? (

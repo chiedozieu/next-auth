@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
     const { name, email, password } = reqBody;
-    console.log("reqBody", reqBody);
+   
 
     if (!name || !email || !password) {
       return NextResponse.json({ error: "Missing Fields" }, { status: 400 });
@@ -30,15 +30,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const newUser = new User({
+    // const newUser = new User({
+    //   name,
+    //   email,
+    //   password: hashedPassword,
+    // });
+    const newUser = await User.create({
       name,
       email,
       password: hashedPassword,
     });
 
-    await newUser.save();
+    // await newUser.save();
 
-    console.log("newUser", newUser);
+    // console.log("newUser", newUser);
 
     return NextResponse.json({ 
         message: "User Created",
