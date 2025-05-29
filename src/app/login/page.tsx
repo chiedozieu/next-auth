@@ -5,11 +5,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { toast } from "react-toastify";
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const [user, setUser] = useState({
@@ -32,8 +34,8 @@ export default function LoginPage() {
       toast.success("Login success");
       router.push("/profile");
     } catch (error: any) {
-      console.log("Login failed", error.message);
-      toast.error(error.message);
+      console.log("Login failed", error?.message);
+      toast.error(error?.message);
     } finally {
       setLoading(false);
     }
@@ -68,15 +70,33 @@ export default function LoginPage() {
         >
           Password
         </label>
-        <input
-          id="password"
-          type="password"
-          required
-          value={user.password}
-          onChange={(e) => setUser({ ...user, password: e.target.value })}
-          placeholder="Enter your password"
-          className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-        />
+
+        <div className="relative ">
+          <input
+            id="password"
+            type={`${showPassword ? "text" : "password"}`}
+            required
+            value={user.password}
+            onChange={(e) => setUser({ ...user, password: e.target.value })}
+            placeholder="Enter your password"
+            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          />
+          {showPassword ? (
+            <LuEyeClosed
+              onClick={() => setShowPassword(!showPassword)}
+              className={`absolute right-2 top-2 cursor-pointer text-[#141313]`}
+              size={20}
+            />
+          ) : (
+            <LuEye
+              onClick={() => setShowPassword(!showPassword)}
+              className={`${
+                showPassword && "hidden"
+              } absolute right-2 top-2 cursor-pointer text-[#141313]`}
+              size={20}
+            />
+          )}
+        </div>
       </div>
 
       {buttonDisabled ? (
@@ -86,7 +106,9 @@ export default function LoginPage() {
       ) : (
         <button
           onClick={onLogin}
-          className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md cursor-pointer ${loading && "animate-pulse cursor-not-allowed"}`}
+          className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md cursor-pointer ${
+            loading && "animate-pulse cursor-not-allowed"
+          }`}
         >
           {loading ? (
             <AiOutlineLoading3Quarters className="animate-spin mx-auto size-6" />

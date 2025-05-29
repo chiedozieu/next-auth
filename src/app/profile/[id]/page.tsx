@@ -1,7 +1,9 @@
 import React from 'react'
 
-export default function UserProfile({params}:any) {
+
+export default async function UserProfile({params}:any) {
+  const {id} = await params
   return (
-    <div className='text-center'> User Profile: {params.id} </div>
+    <div className='text-center'> User Profile: {id} </div>
   )
 }
