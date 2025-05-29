@@ -90,9 +90,7 @@ export default function LoginPage() {
           ) : (
             <LuEye
               onClick={() => setShowPassword(!showPassword)}
-              className={`${
-                showPassword && "hidden"
-              } absolute right-2 top-2 cursor-pointer text-[#141313]`}
+              className={`absolute right-2 top-2 cursor-pointer text-[#141313]`}
               size={20}
             />
           )}

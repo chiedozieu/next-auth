@@ -6,11 +6,13 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { toast } from "react-toastify";
 
 export default function SignupPage() {
   const router = useRouter();
   const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [user, setUser] = useState({
@@ -93,15 +95,30 @@ export default function SignupPage() {
         >
           Password
         </label>
-        <input
-          id="password"
-          type="password"
-          required
-          value={user.password}
-          onChange={(e) => setUser({ ...user, password: e.target.value })}
-          placeholder="Enter your password"
-          className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-        />
+        <div className="relative">
+          <input
+            id="password"
+            type={`${showPassword ? "text" : "password"}`}
+            required
+            value={user.password}
+            onChange={(e) => setUser({ ...user, password: e.target.value })}
+            placeholder="Enter your password"
+            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          />
+           {showPassword ? (
+                      <LuEyeClosed
+                        onClick={() => setShowPassword(!showPassword)}
+                        className={`absolute right-2 top-2 cursor-pointer text-[#141313]`}
+                        size={20}
+                      />
+                    ) : (
+                      <LuEye
+                        onClick={() => setShowPassword(!showPassword)}
+                        className={`absolute right-2 top-2 cursor-pointer text-[#141313]`}
+                        size={20}
+                      />
+                    )}
+        </div>
       </div>
 
       {buttonDisabled ? (
